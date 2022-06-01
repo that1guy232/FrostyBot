@@ -58,20 +58,17 @@ class FrostyBot(discord.Client):
 
                 pass
         
-        if message.author.id == 420699531026628620: # Aiden's User ID
-            #Split the message content into words
-            words  = message_content.split(" ")
-            #For every word in the mesage is it "cunt"
-            bad_words = ["cunt", "fuck", "bitch"]
-            for word in words:
-               #If word is in bad_words
-                if bad_words.__contains__(word):
-                    print("Getting insult")
-                    insult = requests.get('https://insult.mattbas.org/api/insult')
-                    #Ping Aiden (who sent the message) and send the insult.
-                    await message.channel.send(message.author.mention + " " + insult.text)        
+        #Does the message_content start with !insult?
+        if message_content.startswith("!insult"):
+            #Get the insult
+            print("Getting insult")
+            async with message.channel.typing():
+                insult = requests.get("https://insult.mattbas.org/api/insult.txt").text
+                await message.channel.send(insult)
+                pass
+            
 
-            pass
+
 
 
 def main():
